@@ -6,658 +6,366 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A Question For You 💋</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-–rose: #c0392b;
-–deep-rose: #922b21;
-–blush: #f9e0e0;
-–gold: #d4a847;
-–cream: #fdf6ec;
-–dark: #1a0a0a;
-–silk: #f0d9d9;
-}
-
-body {
-font-family: ‘Cormorant Garamond’, serif;
-background: var(–dark);
-color: var(–cream);
-min-height: 100vh;
-overflow-x: hidden;
-cursor: default;
-}
-
-/* Particle canvas */
-#particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
-
-/* Pages */
-.page {
-position: fixed; inset: 0;
-display: flex; flex-direction: column;
-align-items: center; justify-content: center;
-z-index: 10;
-transition: opacity 0.8s ease, transform 0.8s ease;
-padding: 2rem;
-}
-.page.hidden { opacity: 0; pointer-events: none; transform: scale(0.97); }
-
-/* === PAGE 1 === */
-#page-ask {
-background: radial-gradient(ellipse at center, #2d0a0a 0%, #1a0a0a 70%);
-}
-
-.envelope-wrap {
-position: relative;
-display: flex; flex-direction: column; align-items: center;
-gap: 2.5rem;
-}
-
-.heart-big {
-font-size: 5rem;
-animation: heartbeat 1.4s ease-in-out infinite;
-filter: drop-shadow(0 0 30px rgba(192,57,43,0.7));
-}
-@keyframes heartbeat {
-0%,100% { transform: scale(1); }
-14% { transform: scale(1.15); }
-28% { transform: scale(1); }
-42% { transform: scale(1.1); }
-}
-
-.ask-title {
-font-family: ‘Playfair Display’, serif;
-font-style: italic;
-font-size: clamp(2rem, 6vw, 3.5rem);
-color: var(–cream);
-text-align: center;
-line-height: 1.2;
-text-shadow: 0 0 40px rgba(192,57,43,0.5);
-}
-.ask-title span { color: var(–gold); }
-
-.ask-sub {
-font-size: clamp(1rem, 3vw, 1.3rem);
-color: var(–silk);
-text-align: center;
-font-style: italic;
-opacity: 0.85;
-letter-spacing: 0.04em;
-max-width: 480px;
-line-height: 1.7;
-}
-
-.btn-row {
-display: flex; gap: 1.2rem; flex-wrap: wrap; justify-content: center;
-margin-top: 0.5rem;
-}
-
-.btn {
-font-family: ‘Cormorant Garamond’, serif;
-font-size: 1.2rem;
-letter-spacing: 0.08em;
-padding: 0.85rem 2.5rem;
-border: none;
-border-radius: 50px;
-cursor: pointer;
-transition: all 0.3s ease;
-position: relative;
-overflow: hidden;
-}
-.btn::after {
-content: ‘’;
-position: absolute; inset: 0;
-background: rgba(255,255,255,0.1);
-opacity: 0;
-transition: opacity 0.2s;
-}
-.btn:hover::after { opacity: 1; }
-
-.btn-yes {
-background: linear-gradient(135deg, var(–rose), var(–deep-rose));
-color: #fff;
-box-shadow: 0 4px 20px rgba(192,57,43,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
-}
-.btn-yes:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 8px 30px rgba(192,57,43,0.7); }
-
-.btn-maybe {
-background: transparent;
-color: var(–gold);
-border: 1.5px solid var(–gold);
-box-shadow: 0 0 15px rgba(212,168,71,0.2);
-}
-.btn-maybe:hover { transform: translateY(-3px); background: rgba(212,168,71,0.08); }
-
-.rose-deco {
-position: fixed;
-font-size: 3rem;
-opacity: 0.08;
-pointer-events: none;
-animation: floatRose 8s ease-in-out infinite;
-}
-.rose-deco:nth-child(1) { top: 5%; left: 3%; animation-delay: 0s; }
-.rose-deco:nth-child(2) { top: 15%; right: 5%; animation-delay: 2s; font-size: 2rem; }
-.rose-deco:nth-child(3) { bottom: 10%; left: 8%; animation-delay: 4s; font-size: 2.5rem; }
-.rose-deco:nth-child(4) { bottom: 20%; right: 3%; animation-delay: 1.5s; }
-@keyframes floatRose {
-0%,100% { transform: translateY(0) rotate(-5deg); }
-50% { transform: translateY(-20px) rotate(5deg); }
-}
-
-/* === PAGE 2 MAYBE === */
-#page-maybe {
-background: radial-gradient(ellipse at center, #2d0a0a 0%, #1a0a0a 70%);
-text-align: center;
-gap: 2rem;
-}
-.maybe-emoji { font-size: 4rem; animation: wobble 1s ease-in-out infinite alternate; }
-@keyframes wobble { from { transform: rotate(-8deg); } to { transform: rotate(8deg); } }
-.maybe-title {
-font-family: ‘Playfair Display’, serif;
-font-style: italic;
-font-size: clamp(1.8rem, 5vw, 3rem);
-color: var(–cream);
-text-shadow: 0 0 30px rgba(192,57,43,0.4);
-}
-.maybe-text {
-font-size: 1.15rem; color: var(–silk); font-style: italic;
-max-width: 420px; line-height: 1.8; opacity: 0.9;
-}
-
-/* === PAGE 3 SCRATCH === */
-#page-scratch {
-background: radial-gradient(ellipse at 30% 30%, #2a0d1a 0%, #1a0a0a 60%);
-gap: 1.5rem;
-}
-
-.scratch-title {
-font-family: ‘Playfair Display’, serif;
-font-style: italic;
-font-size: clamp(1.6rem, 4.5vw, 2.8rem);
-text-align: center;
-color: var(–cream);
-text-shadow: 0 0 30px rgba(192,57,43,0.4);
-}
-.scratch-sub {
-font-size: 1.05rem; color: var(–silk); font-style: italic;
-text-align: center; opacity: 0.8; letter-spacing: 0.03em;
-}
-
-.cards-row {
-display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center;
-margin-top: 0.5rem;
-}
-
-.card-wrap {
-position: relative;
-width: 160px; height: 200px;
-border-radius: 18px;
-cursor: crosshair;
-transition: transform 0.3s ease;
-}
-.card-wrap:hover { transform: translateY(-6px) scale(1.02); }
-.card-wrap.revealed { cursor: default; }
-
-.card-back {
-position: absolute; inset: 0;
-border-radius: 18px;
-background: linear-gradient(135deg, #8B1a1a, #5c0f0f);
-border: 1.5px solid rgba(212,168,71,0.4);
-display: flex; flex-direction: column;
-align-items: center; justify-content: center;
-gap: 0.5rem;
-box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
-z-index: 2;
-}
-.card-back-icon { font-size: 2.5rem; }
-.card-back-hint {
-font-size: 0.75rem; color: var(–gold); letter-spacing: 0.12em;
-text-transform: uppercase; font-family: ‘Cormorant Garamond’, serif;
-font-style: italic; opacity: 0.8;
-}
-
-.card-front {
-position: absolute; inset: 0;
-border-radius: 18px;
-background: linear-gradient(135deg, #fdf0f0, #f8dede);
-display: flex; flex-direction: column;
-align-items: center; justify-content: center;
-gap: 0.6rem;
-padding: 1rem;
-z-index: 1;
-}
-.card-front-icon { font-size: 2.8rem; }
-.card-front-label {
-font-family: ‘Playfair Display’, serif;
-font-size: 0.95rem; font-style: italic;
-color: var(–deep-rose); text-align: center;
-line-height: 1.3; font-weight: 700;
-}
-.card-front-sub {
-font-size: 0.7rem; color: #888; font-style: italic;
-text-align: center; line-height: 1.4;
-}
-
-/* Scratch canvas overlay */
-.scratch-canvas {
-position: absolute; inset: 0;
-border-radius: 18px;
-z-index: 3;
-cursor: crosshair;
-}
-
-.reveal-text {
-display: none;
-margin-top: 0.5rem;
-font-size: 0.8rem; color: var(–gold);
-font-style: italic; text-align: center;
-animation: fadeIn 0.5s ease;
-}
-.card-wrap.revealed .reveal-text { display: block; }
-
-/* === PAGE 4 FINAL === */
-#page-final {
-background: radial-gradient(ellipse at center, #2d0a0a 0%, #1a0a0a 70%);
-gap: 1.8rem; text-align: center;
-}
-
-.final-emoji { font-size: 4.5rem; animation: heartbeat 1.2s ease-in-out infinite; }
-.final-title {
-font-family: ‘Playfair Display’, serif;
-font-style: italic;
-font-size: clamp(1.8rem, 5vw, 3rem);
-color: var(–cream);
-text-shadow: 0 0 40px rgba(192,57,43,0.6);
-}
-.final-choice-box {
-background: rgba(192,57,43,0.12);
-border: 1px solid rgba(212,168,71,0.3);
-border-radius: 20px;
-padding: 1.5rem 2.5rem;
-max-width: 400px;
-}
-.final-choice-emoji { font-size: 3rem; }
-.final-choice-name {
-font-family: ‘Playfair Display’, serif;
-font-style: italic; font-size: 1.6rem;
-color: var(–gold); margin-top: 0.4rem;
-}
-.final-choice-desc {
-font-size: 1rem; color: var(–silk);
-font-style: italic; margin-top: 0.5rem;
-opacity: 0.85; line-height: 1.6;
-}
-.final-sub {
-font-size: 1.1rem; color: var(–silk);
-font-style: italic; opacity: 0.8; max-width: 380px; line-height: 1.7;
-}
-
-@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-
-/* Confetti burst */
-.confetti-piece {
-position: fixed;
-width: 8px; height: 8px;
-border-radius: 50%;
-pointer-events: none;
-z-index: 999;
-animation: confettiFall linear forwards;
-}
-@keyframes confettiFall {
-0% { opacity: 1; transform: translateY(0) rotate(0deg); }
-100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
-}
-
-/* Divider */
-.gold-divider {
-width: 80px; height: 1px;
-background: linear-gradient(90deg, transparent, var(–gold), transparent);
-margin: 0 auto;
-}
-
-/* Scratch hint shimmer */
-.shimmer {
-position: absolute; inset: 0; border-radius: 18px;
-background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.08) 50%, transparent 60%);
-animation: shimmer 2.5s linear infinite;
-pointer-events: none; z-index: 4;
-}
-@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans)}
+#app{padding:1rem 0}
+.header{margin-bottom:1.5rem}
+.header h1{font-size:20px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+.header p{font-size:13px;color:var(--color-text-secondary)}
+.progress-bar-wrap{background:var(--color-background-secondary);border-radius:999px;height:8px;margin:12px 0 6px;overflow:hidden}
+.progress-bar-fill{height:100%;background:#5340c0;border-radius:999px;transition:width 0.3s}
+.stats{display:flex;gap:16px;margin-bottom:1.5rem;flex-wrap:wrap}
+.stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 16px;font-size:13px;color:var(--color-text-secondary);flex:1;min-width:100px;text-align:center}
+.stat span{display:block;font-size:20px;font-weight:500;color:var(--color-text-primary);line-height:1.3}
+.week-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.5rem}
+.wt{font-size:12px;padding:4px 10px;border-radius:999px;border:0.5px solid var(--color-border-secondary);background:transparent;cursor:pointer;color:var(--color-text-secondary)}
+.wt.active{background:#5340c0;color:#fff;border-color:#5340c0}
+.wt.done{border-color:#0f6e56;color:#0f6e56}
+.q-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem;margin-bottom:1rem}
+.q-meta{font-size:11px;color:var(--color-text-tertiary);margin-bottom:8px}
+.q-text{font-size:14px;font-weight:500;color:var(--color-text-primary);line-height:1.6;margin-bottom:14px}
+.options{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);cursor:pointer;font-size:13px;color:var(--color-text-primary);background:var(--color-background-primary);text-align:left;width:100%;line-height:1.5;transition:background 0.15s,border-color 0.15s}
+.opt:hover:not(:disabled){background:var(--color-background-secondary);border-color:var(--color-border-secondary)}
+.opt .badge{min-width:22px;height:22px;border-radius:50%;border:1px solid var(--color-border-secondary);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;margin-top:1px}
+.opt.selected{border-color:#5340c0;background:#EEEDFE}
+.opt.selected .badge{background:#5340c0;color:#fff;border-color:#5340c0}
+.opt.correct{border-color:#0f6e56;background:#E1F5EE}
+.opt.correct .badge{background:#0f6e56;color:#fff;border-color:#0f6e56}
+.opt.wrong{border-color:#a32d2d;background:#FCEBEB}
+.opt.wrong .badge{background:#a32d2d;color:#fff;border-color:#a32d2d}
+.opt:disabled{cursor:default}
+.nav-row{display:flex;gap:8px;margin-top:1rem;align-items:center}
+.btn{padding:8px 18px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:transparent;cursor:pointer;font-size:13px;color:var(--color-text-primary)}
+.btn:hover{background:var(--color-background-secondary)}
+.btn.primary{background:#5340c0;color:#fff;border-color:#5340c0}
+.btn.primary:hover{background:#3c34a0}
+.btn:disabled{opacity:0.4;cursor:default}
+.q-num{font-size:13px;color:var(--color-text-secondary);margin-left:auto}
+.answer-reveal{margin-top:10px;padding:10px 12px;border-radius:var(--border-radius-md);background:var(--color-background-secondary);font-size:13px;color:var(--color-text-secondary);line-height:1.5;display:none}
+.answer-reveal.show{display:block}
+.answer-reveal strong{color:var(--color-text-primary)}
+#results{display:none;padding:1rem 0}
+.result-hero{text-align:center;padding:2rem 1rem}
+.result-hero .score{font-size:56px;font-weight:500;color:#5340c0}
+.result-hero .out{font-size:18px;color:var(--color-text-secondary)}
+.result-hero p{font-size:14px;color:var(--color-text-secondary);margin-top:8px}
+.review-list{margin-top:1.5rem}
+.review-item{border-radius:var(--border-radius-md);padding:10px 14px;margin-bottom:8px;font-size:13px;border-left:3px solid transparent}
+.review-item.rv-correct{background:#E1F5EE;border-color:#0f6e56}
+.review-item.rv-wrong{background:#FCEBEB;border-color:#a32d2d}
+.review-item .rv-q{color:var(--color-text-primary);font-weight:500;margin-bottom:4px;line-height:1.5}
+.review-item .rv-your{color:#a32d2d}
+.review-item .rv-ans{color:#0f6e56}
+.mode-toggle{display:flex;gap:6px;margin-bottom:1rem}
 </style>
 
-</head>
-<body>
-
-<canvas id="particles"></canvas>
-
-<!-- Rose decorations -->
-
-<div class="rose-deco">🌹</div>
-<div class="rose-deco">🥀</div>
-<div class="rose-deco">🌹</div>
-<div class="rose-deco">💋</div>
-
-<!-- PAGE 1: Ask -->
-
-<div class="page" id="page-ask">
-  <div class="envelope-wrap">
-    <div class="heart-big">💋</div>
-    <h1 class="ask-title">Hey <span>beautiful</span>,<br>I have a question…</h1>
-    <div class="gold-divider"></div>
-    <p class="ask-sub">
-      The night is young, the candles are lit,<br>
-      and I've been thinking about you all day…<br>
-      So tell me, my love —
-    </p>
-    <h2 class="ask-title" style="font-size:clamp(1.4rem,4vw,2.2rem)">Can I get a <span>go</span> tonight? 🌙</h2>
-    <div class="btn-row">
-      <button class="btn btn-yes" onclick="showScratch()">Yes, baby 💋</button>
-      <button class="btn btn-maybe" onclick="showMaybe()">Maybe… 🥀</button>
+<div id="app">
+  <div id="quiz-view">
+    <div class="header">
+      <h1>NPTEL MOSFET / VLSI — Full Quiz</h1>
+      <p id="sub">All 120 questions from Weeks 1–12 · Select an answer, then move forward</p>
     </div>
+    <div class="stats">
+      <div class="stat"><span id="s-answered">0</span>answered</div>
+      <div class="stat"><span id="s-correct">0</span>correct</div>
+      <div class="stat"><span id="s-wrong">0</span>wrong</div>
+      <div class="stat"><span id="s-left">120</span>remaining</div>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="prog" style="width:0%"></div></div>
+    <div class="week-tabs" id="week-tabs"></div>
+    <div id="q-container"></div>
   </div>
-</div>
-
-<!-- PAGE 2: Maybe -->
-
-<div class="page hidden" id="page-maybe">
-  <div class="maybe-emoji">🥺</div>
-  <h2 class="maybe-title">Maybe means yes<br>in your language, right?</h2>
-  <div class="gold-divider"></div>
-  <p class="maybe-text">
-    I know your "maybe" face… those eyes say more than words ever could.
-    Come on, let's make tonight one to remember. 🌹
-  </p>
-  <button class="btn btn-yes" onclick="showScratch()" style="margin-top:1rem">
-    Okay fine… yes 💋
-  </button>
-</div>
-
-<!-- PAGE 3: Scratch Cards -->
-
-<div class="page hidden" id="page-scratch">
-  <h2 class="scratch-title">I knew it… 🔥<br>Now pick your vibe tonight</h2>
-  <p class="scratch-sub">Scratch a card to reveal your choice ✨</p>
-  <div class="gold-divider"></div>
-
-  <div class="cards-row">
-    <!-- Card 1 -->
-    <div>
-      <div class="card-wrap" id="card-0" data-emoji="🕯️" data-label="Slow & Romantic" data-desc="Candles, wine & long kisses — all night long">
-        <div class="card-front">
-          <div class="card-front-icon">🕯️</div>
-          <div class="card-front-label">Slow &<br>Romantic</div>
-          <div class="card-front-sub">Candles, wine & long kisses all night</div>
-        </div>
-        <div class="card-back">
-          <div class="card-back-icon">🌹</div>
-          <div class="card-back-hint">Scratch me</div>
-        </div>
-        <canvas class="scratch-canvas" id="canvas-0"></canvas>
-        <div class="shimmer" id="shimmer-0"></div>
-      </div>
-      <div class="reveal-text" id="reveal-0">💛 You chose!</div>
+  <div id="results">
+    <div class="result-hero">
+      <div class="score" id="final-score">0</div>
+      <div class="out">/ 120</div>
+      <p id="final-msg"></p>
     </div>
-
-```
-<!-- Card 2 -->
-<div>
-  <div class="card-wrap" id="card-1" data-emoji="🔥" data-label="Wild & Passionate" data-desc="No rules, just fire — let it all go tonight">
-    <div class="card-front">
-      <div class="card-front-icon">🔥</div>
-      <div class="card-front-label">Wild &<br>Passionate</div>
-      <div class="card-front-sub">No rules, just fire — let it all go</div>
+    <div style="display:flex;gap:8px;justify-content:center;margin-bottom:1.5rem">
+      <button class="btn primary" onclick="restartQuiz()">Restart quiz</button>
+      <button class="btn" onclick="showReview()">Review answers</button>
     </div>
-    <div class="card-back">
-      <div class="card-back-icon">💋</div>
-      <div class="card-back-hint">Scratch me</div>
-    </div>
-    <canvas class="scratch-canvas" id="canvas-1"></canvas>
-    <div class="shimmer" id="shimmer-1"></div>
-  </div>
-  <div class="reveal-text" id="reveal-1">💛 You chose!</div>
-</div>
-
-<!-- Card 3 -->
-<div>
-  <div class="card-wrap" id="card-2" data-emoji="🌙" data-label="Surprise Me" data-desc="You're in charge — I'll follow your lead all night">
-    <div class="card-front">
-      <div class="card-front-icon">🌙</div>
-      <div class="card-front-label">Surprise<br>Me</div>
-      <div class="card-front-sub">You're in charge — I'll follow your lead</div>
-    </div>
-    <div class="card-back">
-      <div class="card-back-icon">✨</div>
-      <div class="card-back-hint">Scratch me</div>
-    </div>
-    <canvas class="scratch-canvas" id="canvas-2"></canvas>
-    <div class="shimmer" id="shimmer-2"></div>
-  </div>
-  <div class="reveal-text" id="reveal-2">💛 You chose!</div>
-</div>
-```
-
-  </div>
-</div>
-
-<!-- PAGE 4: Final -->
-
-<div class="page hidden" id="page-final">
-  <div class="final-emoji">💋</div>
-  <h2 class="final-title">Perfect choice, my love</h2>
-  <div class="gold-divider"></div>
-  <div class="final-choice-box">
-    <div class="final-choice-emoji" id="final-emoji">🕯️</div>
-    <div class="final-choice-name" id="final-name">Slow & Romantic</div>
-    <div class="final-choice-desc" id="final-desc">Candles, wine & long kisses all night long</div>
-  </div>
-  <p class="final-sub">
-    Tonight is all about you and me.<br>
-    I'll be counting every second until I see you. 🌹
-  </p>
-  <div style="font-size:2rem; letter-spacing:0.2em; opacity:0.7;">
-    ❤️ 🥂 🕯️
+    <div class="review-list" id="review-list" style="display:none"></div>
   </div>
 </div>
 
 <script>
-// ── Particle System ──────────────────────────────────────────
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-let particles = [];
-let W, H;
+const ALL_Q = [
+  {w:1,q:"The mass action law states that at thermal equilibrium:",opts:["n − p = ni","n + p = ni","np = ni²","n/p = ni"],ans:2},
+  {w:1,q:"In an n-type semiconductor with n = 10¹⁵ cm⁻³ and ni = 10¹⁰ cm⁻³, the hole concentration is:",opts:["10⁵ cm⁻³","10¹⁰ cm⁻³","10¹⁵ cm⁻³","10²⁰ cm⁻³"],ans:0},
+  {w:1,q:"The depletion width xd in a p-type semiconductor is proportional to:",opts:["φs","√φs","1/φs","φs²"],ans:1},
+  {w:1,q:"For a p-type semiconductor, increasing the acceptor doping Na will:",opts:["Increase depletion width","Decrease depletion width","No change","Infinite depletion width"],ans:1},
+  {w:1,q:"In a p-type semiconductor, the electron inversion charge density ns increases primarily when:",opts:["Surface potential Δφs increases","Acceptor doping Na increases","Temperature decreases","Both A and B"],ans:3},
+  {w:1,q:"For a p-type semiconductor at 300K with ni=10¹⁰cm⁻³, φfp=0.4V, Δφs=0.1V, VT=0.026V, find ns:",opts:["2.2×10¹⁴ cm⁻³","2.2×10¹⁶ cm⁻³","2.2×10¹⁸ cm⁻³","2.2×10²⁰ cm⁻³"],ans:2},
+  {w:1,q:"Under flat-band condition in a MOS structure, which is true?",opts:["ψs=0 and energy bands are flat","ψs>0 and bands bend downwards","ψs<0 and bands bend upwards","There is depletion charge in the substrate"],ans:0},
+  {w:1,q:"The gate voltage required to achieve flat band is equal to:",opts:["φMS","−φMS","2φfp","0"],ans:0},
+  {w:1,q:"In a MOS capacitor on a p-type substrate, accumulation occurs when:",opts:["VGS > 0","VGS = VFB","VGS < 0","VGS > VFB"],ans:2},
+  {w:1,q:"What happens to the majority carrier concentration near the surface during accumulation?",opts:["It decreases below equilibrium","It equals the intrinsic level","It increases above equilibrium","It becomes zero"],ans:2},
+  {w:2,q:"At the threshold condition of a MOS capacitor with a p-type substrate, the surface potential becomes:",opts:["ψs < 0","ψs = 0","ψs = φB","ψs = 2φB"],ans:3},
+  {w:2,q:"In the strong inversion region of a MOS capacitor with p-type substrate, which condition holds at the surface?",opts:["ns << pbulk","ns = pbulk","ns >> pbulk","ps >> nbulk"],ans:2},
+  {w:2,q:"In the presence of positive oxide trapped charge Qox, the flat-band voltage shifts:",opts:["Toward more positive values","Toward more negative values","Remains unchanged","Becomes zero"],ans:1},
+  {w:2,q:"As the depletion region width increases in a MOS capacitor, the depletion capacitance:",opts:["Increases","Decreases","Remains constant","First increases then decreases"],ans:1},
+  {w:2,q:"Energy band diagrams with interface traps lead to C-V curves that typically:",opts:["Shift randomly with voltage","Become ideal since traps smooth out band bending","Show stretch-out or smearing due to trap response","Remain identical to ideal MOS C-V"],ans:2},
+  {w:2,q:"In an n-channel enhancement MOSFET, what is required to create the conducting channel?",opts:["A negative gate voltage","A positive gate voltage greater than threshold","A large drain-to-source voltage only","Heating the substrate"],ans:1},
+  {w:2,q:"The differential resistance dR of a small channel segment is:",opts:["dR = μnW/Qi(x)","dR = dx / (μnWQi(x))","dR = μnQi(x)dx","dR = Wμndx"],ans:1},
+  {w:2,q:"Strong inversion in a MOSFET begins when the surface potential reaches:",opts:["Ψs = φF","Ψs = 2φF","Ψs = Δφ + 2φF","Ψs < φF"],ans:2},
+  {w:2,q:"Gate-to-source and gate-to-drain overlap capacitances mainly arise due to:",opts:["Fringing fields in the depletion region","Overlap of gate electrode over source and drain diffusion","Channel length modulation","Body effect"],ans:1},
+  {w:2,q:"In cutoff region (no channel formed), the total gate capacitance CG is equal to:",opts:["CoxWL","CGS + CGD (overlap only)","Zero","(2/3)CoxWL"],ans:1},
+  {w:3,q:"In the context of the small-signal model, the intrinsic part of the MOS transistor refers to:",opts:["Only external parasitic resistances","Only gate leakage and body currents","The internal channel region between source and drain","The metal contacts and interconnects"],ans:2},
+  {w:3,q:"Why must gate current IG and body current IB be included in the small-signal model for modern MOSFETs?",opts:["Because they dominate drain current","Because thin oxides cause tunneling and high electric fields, introducing measurable AC leakage","Because MOSFETs no longer have an insulating oxide","Because the source becomes floating"],ans:1},
+  {w:3,q:"With k=200µA/V², VGS=1.8V, VT=0.6V, the small-signal transconductance gm is:",opts:["120 µS","240 µS","480 µS","60 µS"],ans:1},
+  {w:3,q:"With gm=5mS, gsd=0.2mS, ΔVGS=10mV, ΔVDS=100mV (body effect neglected), find ΔID:",opts:["30 µA","50 µA","70 µA","100 µA"],ans:2},
+  {w:3,q:"Why is the small-signal model valid only for small variations around a bias point?",opts:["Because MOSFETs stop conducting for large signals","Because the MOSFET I-V characteristics are nonlinear","Because gate capacitance becomes zero for large signals","Because the drain current is independent of biasing"],ans:1},
+  {w:3,q:"In a MOSFET small-signal model, body transconductance gmb is usually smaller than gm because:",opts:["The body terminal is floating","The body has higher resistance","Body voltage affects drain current only indirectly through threshold voltage","The body terminal carries no charge"],ans:2},
+  {w:3,q:"At high measurement frequencies, why does the MOS capacitor capacitance in inversion approach a minimum constant value Cmin?",opts:["Because the oxide capacitance becomes dominant","Because inversion charge cannot respond to the AC signal","Because depletion width becomes zero","Because majority carriers stop responding"],ans:1},
+  {w:3,q:"Deep depletion in a MOS capacitor occurs when:",opts:["The gate voltage is applied very slowly","The measurement frequency is very low","The gate voltage is ramped faster than the minority-carrier response time","The substrate doping concentration is very high"],ans:2},
+  {w:3,q:"The unity gain frequency fT of a MOSFET is best defined as:",opts:["The frequency at which voltage gain becomes unity","The frequency at which short-circuit current gain of a common-source MOSFET becomes unity","The frequency at which power gain is maximum","The frequency at which gate capacitance becomes dominant"],ans:1},
+  {w:3,q:"For a MOSFET amplifier, the gain-bandwidth product (GBW) is:",opts:["Dependent only on load resistance","The product of midband gain and 3-dB bandwidth","Equal to unity gain frequency for all configurations","Independent of frequency response"],ans:1},
+  {w:4,q:"When an NMOS transistor is used as a switch, which condition ensures the ON state with minimum drain-source resistance?",opts:["VGS = VT","VGS < VT","VGS > VT and the device operates in the triode region","VDS > VGS − VT"],ans:2},
+  {w:4,q:"In a common-source MOSFET amplifier operating in saturation (neglecting CLM), the small-signal voltage gain depends primarily on:",opts:["Gate oxide capacitance only","Drain resistance only","Product of transconductance and drain resistance","Threshold voltage only"],ans:2},
+  {w:4,q:"SPICE is primarily used in circuit design to:",opts:["Replace hardware fabrication completely","Simulate operating conditions of analog circuits using device models","Perform only digital logic verification","Measure physical parameters of semiconductor wafers"],ans:1},
+  {w:4,q:"Which correctly describes the two main types of SPICE models?",opts:["Linear models and nonlinear models","AC models and DC models","Device models and subcircuit models","Ideal models and practical models"],ans:2},
+  {w:4,q:"Monte Carlo analysis in SPICE is primarily used to:",opts:["Analyze frequency response of a circuit","Study time-domain behavior of signals","Evaluate the effect of component variations on circuit performance","Improve numerical convergence of nonlinear equations"],ans:2},
+  {w:4,q:"The Newton-Raphson method in SPICE is mainly used to:",opts:["Perform AC small-signal analysis","Solve nonlinear circuit equations during DC and transient analysis","Extract device parameters from measurements","Reduce simulation time for linear circuits"],ans:1},
+  {w:4,q:"Which statement about PSpice Lite 9.2 is correct?",opts:["It supports unlimited nodes and devices","It is limited to 64 nodes and 10 transistors","It supports only digital circuit simulation","It does not support MOSFET simulation"],ans:1},
+  {w:4,q:"Why is placing a ground node mandatory in LTspice circuit simulation?",opts:["To reduce simulation time","To improve numerical accuracy","To provide a reference node for nodal analysis","To enable AC analysis only"],ans:2},
+  {w:4,q:"In SPICE simulations, why must results from a diode device model be interpreted with caution?",opts:["Because SPICE ignores parasitic resistances","Because device models are based only on experimental data","Because device models represent only ideal theoretical equations","Because SPICE cannot simulate nonlinear devices"],ans:2},
+  {w:4,q:"In the SPICE diode current equation, the emission coefficient N primarily accounts for:",opts:["Series resistance effects","Deviation from ideal exponential current behavior","Temperature dependence of saturation current","Junction capacitance variation with bias"],ans:1},
+  {w:5,q:"Which is a major limitation of the Level-1 (Shichman-Hodges) MOSFET model used in SPICE?",opts:["It accurately models short-channel effects","It includes subthreshold conduction and gate tunnelling","It predicts output resistance in saturation poorly","It accounts for stress and temperature variations"],ans:2},
+  {w:5,q:"Which correctly represents a third-generation MOSFET SPICE model?",opts:["Level-1 (Shichman-Hodges model)","Level-2 MOSFET model","BSIM3 model","HSPICE Level-28 model"],ans:2},
+  {w:5,q:"In the Level-1 MOSFET capacitance model, why are the gate-source capacitance equations modified near the transition between triode and saturation regions?",opts:["To include velocity saturation effects","To account for channel length modulation","To ensure continuous variation of capacitance across regions","To model subthreshold conduction"],ans:2},
+  {w:5,q:"Which correctly describes a limitation of the Level-2 MOSFET model?",opts:["It completely ignores body effect","Drain current follows ideal square-law behavior at all VDS","It cannot model depletion capacitances","Drain current becomes less than square-law prediction at large VDS"],ans:3},
+  {w:5,q:"A 3-stage CMOS ring oscillator has propagation delay of 10ns per inverter. What is the oscillation frequency?",opts:["1.67 MHz","3.33 MHz","16.7 MHz","33.3 MHz"],ans:2},
+  {w:5,q:"In SPICE simulations, why are different LEVEL models (1, 2, 3) used for the same device?",opts:["To change only the oxide thickness","To reduce simulation time without affecting accuracy","To represent increasing physical effects and improve modeling accuracy","To avoid convergence problems in DC analysis"],ans:2},
+  {w:5,q:"While simulating a CMOS inverter, the DC transfer characteristic (VTC) is primarily used to determine:",opts:["Switching threshold and noise margins","Propagation delay of the inverter","Power dissipation during switching","Ring oscillator frequency"],ans:0},
+  {w:5,q:"In a semiconductor under an applied electric field, which mechanism is primarily responsible for drift current?",opts:["Carrier motion due to concentration gradient","Carrier motion due to thermal excitation only","Carrier motion due to an external electric field","Carrier tunneling through a potential barrier"],ans:2},
+  {w:5,q:"Which correctly describes dielectric displacement current?",opts:["It represents actual flow of electrons through an insulator","It occurs only under steady-state DC conditions","It maintains current continuity due to time-varying electric fields","It is caused by carrier diffusion across a junction"],ans:2},
+  {w:5,q:"When a metal makes contact with an n-type semiconductor, a Schottky barrier is formed primarily due to:",opts:["Diffusion of metal atoms into the semiconductor bulk","Difference between metal work function and semiconductor electron affinity","Recombination of electrons and holes at the interface","Presence of surface states only"],ans:1},
+  {w:6,q:"When a metal makes intimate contact with a semiconductor and thermal equilibrium is established, which condition must be satisfied?",opts:["The vacuum energy levels of the metal and semiconductor align","The conduction band edges coincide","The Fermi levels of the metal and semiconductor become equal","The electron affinity of the semiconductor equals the metal work function"],ans:2},
+  {w:6,q:"Why is lattice matching important in forming a useful semiconductor heterojunction?",opts:["It increases the carrier mobility directly","It prevents band bending at the junction","It eliminates the need for doping","It minimizes dislocations and interface states"],ans:3},
+  {w:6,q:"In an n-AlGaAs / n-GaAs heterojunction, the primary reason for the high mobility of the 2DEG is:",opts:["Higher electron effective mass","Increased carrier concentration","Reduced impurity scattering in the GaAs channel","Absence of band bending"],ans:2},
+  {w:6,q:"In a PN heterojunction diode, which primarily causes the initial flow of electrons and holes after the junction is formed?",opts:["Difference in intrinsic carrier concentration","Difference in bandgap energies","Difference in Fermi energy levels of the two semiconductors","Difference in dielectric constants"],ans:2},
+  {w:6,q:"Which leakage component is the dominant source of leakage current in modern deep-submicron MOSFETs?",opts:["Junction leakage","Gate oxide leakage","Subthreshold leakage","Impact ionization"],ans:2},
+  {w:6,q:"Drain Induced Barrier Lowering (DIBL) primarily affects which MOSFET parameter?",opts:["Carrier mobility","Threshold voltage","Gate capacitance","Channel resistance"],ans:1},
+  {w:6,q:"Gate leakage in nanoscale MOSFETs mainly occurs due to:",opts:["Avalanche breakdown","Thermal emission","Fowler-Nordheim and direct tunnelling","Impact ionization"],ans:2},
+  {w:6,q:"When a metal contacts a heavily doped semiconductor, the contact behaves as ohmic mainly because:",opts:["The barrier height becomes zero","The depletion width becomes very small, allowing tunnelling","The metal work function equals the semiconductor electron affinity","The junction is always reverse biased"],ans:1},
+  {w:6,q:"The built-in potential barrier in a p-n junction primarily arises due to:",opts:["External bias applied across the junction","Difference in carrier mobilities","Diffusion of carriers leading to space-charge formation","Generation-recombination processes"],ans:2},
+  {w:6,q:"Which statement correctly describes the built-in potential barrier at thermal equilibrium in a junction?",opts:["It allows continuous current flow without bias","It prevents further net diffusion of carriers","It increases with applied forward bias","It depends only on the applied voltage"],ans:1},
+  {w:7,q:"Drain-Induced Barrier Lowering (DIBL) primarily occurs because:",opts:["Gate oxide thickness increases","Drain electric field penetrates into the channel","Source resistance increases","Mobility degradation dominates"],ans:1},
+  {w:7,q:"Gate-Induced Drain Leakage (GIDL) is mainly caused by:",opts:["Subthreshold conduction","Impact ionization near the drain","Band-to-band tunneling at high gate-drain field","Junction recombination current"],ans:2},
+  {w:7,q:"Why does channel length modulation occur in a MOSFET operating in saturation?",opts:["Gate loses control over the channel","Drain depletion region extends into the channel","Source resistance increases","Threshold voltage increases with drain bias"],ans:1},
+  {w:7,q:"Velocity saturation in MOSFETs primarily occurs because:",opts:["Carrier mobility increases at high electric fields","Carrier scattering with lattice increases at high electric fields","Diffusion current dominates over drift current","Channel length becomes infinite"],ans:1},
+  {w:7,q:"Ballistic transport occurs in a MOSFET when:",opts:["Channel length is much larger than mean free path","Drain voltage is very small","Channel length is smaller than the mean free path","Velocity saturation dominates transport"],ans:2},
+  {w:7,q:"A short channel nMOSFET has μ=400cm²/Vs and vsat=8×10⁶cm/s. The critical electric field Ec is closest to:",opts:["1×10³ V/cm","5×10³ V/cm","2×10⁴ V/cm","5×10⁴ V/cm"],ans:2},
+  {w:7,q:"Which statement best explains velocity overshoot in short-channel MOSFETs?",opts:["Carrier velocity decreases due to enhanced phonon scattering","Carrier velocity remains limited to saturation velocity","Carrier velocity temporarily exceeds saturation velocity due to non-local transport","Carrier motion is dominated by diffusion rather than drift"],ans:2},
+  {w:7,q:"In a double-gate MOSFET, why is the subthreshold swing significantly improved compared to a single-gate MOSFET?",opts:["Because the channel length is increased","Because both gates jointly control the channel potential, reducing depletion width","Because carrier mobility is doubled","Because oxide thickness is larger"],ans:1},
+  {w:7,q:"Which is the primary reason double-gate MOSFETs exhibit reduced short-channel effects?",opts:["Higher carrier mobility","Reduced oxide thickness","Improved electrostatic gate control from two sides","Lower drain voltage"],ans:2},
+  {w:7,q:"Compared to planar single-gate MOSFETs, double-gate MOSFETs mainly offer which advantage?",opts:["Higher junction leakage","Increased body effect","Better control of channel potential","Larger parasitic resistance"],ans:2},
+  {w:8,q:"An SOI MOSFET has silicon film thickness of 80nm and BOX thickness of 150nm. This device is most likely operating as:",opts:["Fully Depleted SOI MOSFET","Bulk MOSFET","Partially Depleted SOI MOSFET","Junctionless MOSFET"],ans:2},
+  {w:8,q:"A Fully Depleted SOI MOSFET has channel thickness of 10nm. Compared to PD-SOI, the threshold voltage variation with back-gate bias will be:",opts:["Higher due to floating body","Nearly zero due to full depletion","Extremely nonlinear","Same as bulk MOSFET"],ans:1},
+  {w:8,q:"In the subthreshold region of a MOSFET, the dominant mechanism of drain current flow is:",opts:["Drift due to high electric field","Impact ionization","Tunneling through the oxide","Diffusion of carriers"],ans:3},
+  {w:8,q:"Which change will improve (reduce) the subthreshold swing of a MOSFET?",opts:["Increasing oxide thickness","Increasing interface trap density","Improving gate electrostatic control","Increasing temperature"],ans:2},
+  {w:8,q:"Why is Bessel's differential equation encountered in non-quasi-static small-signal modeling of DG MOSFETs?",opts:["Due to quantum confinement effects","Because of lateral charge diffusion with time dependence","Because drain current is exponential","Due to velocity saturation effects"],ans:1},
+  {w:8,q:"Which statement best distinguishes a junctionless transistor from a conventional MOSFET?",opts:["It operates only in weak inversion","It has abrupt source-drain junctions","Current flow is controlled by gate-induced depletion","It requires lightly doped channels"],ans:2},
+  {w:8,q:"Which feature of FinFETs most directly helps in reducing short-channel effects compared to planar MOSFETs?",opts:["Higher channel doping","Larger oxide thickness","Multiple gate control around the channel","Increased drain bias"],ans:2},
+  {w:8,q:"In FinFET technology, increasing transistor width is primarily achieved by:",opts:["Increasing fin height continuously","Increasing fin width only","Increasing the number of fins","Increasing oxide thickness"],ans:2},
+  {w:8,q:"A FinFET has Hfin=40nm and Tfin=10nm. What is the effective channel width?",opts:["40 nm","60 nm","90 nm","100 nm"],ans:2},
+  {w:8,q:"In a FinFET, if Lgate=20nm and Lext=5nm, what is Leff?",opts:["25 nm","30 nm","35 nm","40 nm"],ans:1},
+  {w:9,q:"Why is non-quasi-static (NQS) modeling essential for FinFETs at high frequency?",opts:["Carrier transit time becomes comparable to signal period","Threshold voltage increases with frequency","Drain current becomes purely capacitive","Channel resistance vanishes at RF"],ans:0},
+  {w:9,q:"In multi-fin FinFETs, why does the gate resistance increase with the number of fins?",opts:["Fin height reduces effective channel width","Source resistance dominates RF performance","Distributed gate paths add series resistance","Gate oxide thickness increases with fins"],ans:2},
+  {w:9,q:"In RF/analog FinFET design, fT and fmax are influenced more strongly by which parameter?",opts:["Source/drain resistance only","Channel length modulation","Parasitic capacitance","Threshold voltage variation"],ans:2},
+  {w:9,q:"A small Sfin-to-Hfin ratio is preferred in RF FinFETs mainly because it:",opts:["Reduces short-channel effects","Minimizes parasitic capacitance","Increases body bias efficiency","Eliminates gate resistance"],ans:1},
+  {w:9,q:"The main reason GAA FETs exhibit better electrostatic control than FinFETs is related to which structural feature?",opts:["Higher channel mobility","Thicker gate oxide","Vertical orientation of the channel","Gate surrounding the channel from all sides"],ans:3},
+  {w:9,q:"The adoption of HfO₂ as a gate dielectric in advanced GAA and FinFET technologies is primarily due to:",opts:["Low dielectric constant","High dielectric constant with reduced gate leakage","Poor thermal stability on silicon","Narrow bandgap"],ans:1},
+  {w:9,q:"Why do GAA nanosheet FETs provide better electrostatic control than FinFETs?",opts:["Because the channel is uniformly doped","Because the gate controls only the top surface","Because the channel is surrounded by the gate on all sides","Because parasitic resistance is eliminated"],ans:2},
+  {w:9,q:"In GAA nanosheet FETs, reducing inter-sheet spacing mainly improves performance by:",opts:["Increasing carrier mobility","Reducing contact resistance","Increasing parasitic resistance","Increasing effective channel width utilization"],ans:3},
+  {w:9,q:"Which statement best explains why nanosheet FETs replace FinFETs at advanced nodes?",opts:["FinFETs cannot be fabricated below 10nm","Nanosheets eliminate the need for spacers","Gate-all-around control improves electrostatics and scalability","Nanosheet FETs operate only in ballistic transport"],ans:2},
+  {w:9,q:"What is the primary purpose of Full Bottom Dielectric Isolation (BDI) in nanosheet FETs?",opts:["Suppressing parasitic bottom channel leakage","Increasing gate capacitance","Enhancing mobility by strain","Reducing sheet height variation"],ans:0},
+  {w:10,q:"Which statement correctly explains why self-heating degrades RF performance in nanosheet FETs?",opts:["Self-heating increases bandgap and gm","Self-heating reduces lattice temperature","Self-heating decreases carrier mobility","Self-heating reduces gate capacitance"],ans:2},
+  {w:10,q:"Work-function variation in metal gates mainly affects which device parameter?",opts:["Channel length","Threshold voltage","Thermal resistance","Oxide thickness"],ans:1},
+  {w:10,q:"Negative capacitance in ferroelectric materials arises primarily due to:",opts:["Downward curvature of the energy-charge (W-Q) relation near zero charge","Increase in oxide thickness","Enhanced carrier mobility","Reduction in source/drain resistance"],ans:0},
+  {w:10,q:"Why is an intermediate dielectric layer often inserted in NC-FET architectures?",opts:["To increase gate leakage","To suppress oxide breakdown","To increase drain current directly","To stabilize ferroelectric domains and prevent field inhomogeneity"],ans:3},
+  {w:10,q:"Why does the introduction of a ferroelectric layer enable sub-60 mV/dec subthreshold swing?",opts:["It increases gate leakage current","It introduces negative capacitance that reduces the body factor below unity","It increases carrier mobility in the channel","It suppresses source/drain resistance"],ans:1},
+  {w:10,q:"Which operating region of an NC-FET must be avoided to prevent hysteresis?",opts:["Region where voltage gain dominates","Region where SS is close to 60 mV/dec","Region where SS becomes negative","Region where gate capacitance matches channel capacitance"],ans:2},
+  {w:10,q:"In a Forksheet FET, if Wwall is reduced from 6nm to 3nm, how does Cnp change?",opts:["Decreases by a factor of 2","Remains unchanged","Increases by a factor of 4","Increases by a factor of 2"],ans:3},
+  {w:10,q:"What is the primary advantage of the dielectric wall in a Forksheet FET compared to nanosheet FETs?",opts:["It increases channel resistance","It isolates nFET and pFET while enabling tighter layout","It suppresses quantum confinement","It eliminates parasitic capacitances entirely"],ans:1},
+  {w:10,q:"In a Forksheet FET, the primary role of the dielectric wall placed between the nFET and pFET nanosheets is to:",opts:["Increase gate leakage current by enhancing fringe fields","Reduce electrostatic coupling and enable tighter N-P spacing","Increase channel resistance to suppress short-channel effects","Eliminate the need for work-function metal patterning"],ans:1},
+  {w:10,q:"Why is work-function metal (WFM) patterning more reliable in Forksheet FETs than in nanosheet FETs?",opts:["Because nanosheets use fewer metal layers","Because Forksheet FETs eliminate gate-all-around control","Because the dielectric wall reduces mask aspect ratio at the N-P boundary","Because Forksheet FETs use planar gates"],ans:2},
+  {w:11,q:"In Forksheet FETs, hot-carrier trapping in the dielectric wall mainly degrades performance because it:",opts:["Reduces effective channel width","Alters channel electrostatics via trapped charge","Increases gate leakage current only","Lowers source-drain resistance"],ans:1},
+  {w:11,q:"Why does self-heating across the dielectric wall impact nFETs more severely than pFETs in Forksheet FETs?",opts:["nFETs have thinner oxides","nFETs experience higher vertical fields","Heat spreads asymmetrically across the DW","nFETs operate at lower gate voltage"],ans:2},
+  {w:11,q:"The primary advantage of CFETs over side-by-side CMOS devices is that CFETs:",opts:["Reduce parasitic capacitance only","Enable higher mobility channels","Stack nMOS and pMOS vertically to reduce footprint","Eliminate source-drain resistance"],ans:2},
+  {w:11,q:"Industry preference is shifting toward monolithic CFETs over sequential CFETs mainly because monolithic CFETs:",opts:["Have lower fabrication cost and parasitics","Use thicker dielectric isolation","Eliminate bonding interfaces","Offer better thermal isolation"],ans:0},
+  {w:11,q:"The primary reason CFETs face severe self-heating issues is:",opts:["Higher gate leakage","Reduced lateral heat spreading in stacked devices","Increased oxide thickness","Lower threshold voltage"],ans:1},
+  {w:11,q:"Design-Technology Co-Optimization (DTCO) mainly aims to:",opts:["Replace lithography with self-assembly","Optimize circuit design independently of process","Jointly optimize process and design for performance and cost","Eliminate parasitic capacitances"],ans:2},
+  {w:11,q:"The key advantage of GaN over silicon for high-power RF devices is its:",opts:["Lower dielectric constant","Narrow bandgap","Higher thermal noise","Wide bandgap and high breakdown field"],ans:3},
+  {w:11,q:"High Electron Mobility Transistors achieve high speed primarily because:",opts:["They use heavy channel doping","Electrons flow in a two-dimensional electron gas with reduced scattering","Holes dominate conduction","They eliminate gate capacitance"],ans:1},
+  {w:11,q:"Why does CFET scaling help improve transistor density compared to lateral scaling?",opts:["It reduces oxide thickness","It increases channel length","It stacks nFET and pFET vertically","It increases supply voltage"],ans:2},
+  {w:11,q:"Physics-based compact models for HEMTs are preferred because they:",opts:["Require no calibration","Are faster than empirical models","Capture polarization and 2DEG effects accurately","Ignore temperature dependence"],ans:2},
+  {w:12,q:"A GaN HEMT has intrinsic gate capacitance Cgs=0.4pF and extrinsic pad capacitance Cgp=0.6pF. The total effective gate capacitance is:",opts:["0.4 pF","0.6 pF","1.0 pF","0.24 pF"],ans:2},
+  {w:12,q:"If velocity saturation reduces carrier velocity by 50%, the drain current in an MVS HEMT will approximately:",opts:["Double","Reduce to half","Remain unchanged","Increase slightly"],ans:1},
+  {w:12,q:"A vertical GaN device has a drift layer thickness doubled from 5µm to 10µm. The breakdown voltage approximately:",opts:["Remains same","Decreases","Doubles","Reduces to half"],ans:2},
+  {w:12,q:"If a nanoparticle size reduces from 20nm to 10nm, the surface-to-volume ratio becomes:",opts:["Half","Same","Double","Four times"],ans:2},
+  {w:12,q:"Why do empirical HEMT models like Angelov require many fitting parameters?",opts:["They ignore capacitances","They are physics-based","They rely on measured curve fitting","They assume constant mobility"],ans:2},
+  {w:12,q:"A key advantage of surface-potential-based HEMT models is:",opts:["Fewer physical parameters","Independent current and charge models","Better harmonic accuracy","Simpler fabrication"],ans:2},
+  {w:12,q:"In MVS HEMT models, drain current and capacitances are:",opts:["Independent","Empirically decoupled","Linked through charge","Assumed constant"],ans:2},
+  {w:12,q:"Why are ML-based GaN HEMT models attractive?",opts:["Fewer parameters","Bias- and temperature-dependent accuracy","Simple equations","No training data needed"],ans:1},
+  {w:12,q:"Why do vertical GaN devices achieve higher breakdown voltage than lateral devices?",opts:["Higher mobility","Shorter channel","Thicker drift region","Lower gate resistance"],ans:2},
+  {w:12,q:"Quantum confinement effects in 2D materials primarily arise due to:",opts:["High defect density","Reduced dimensionality","Strong phonon scattering","Large thickness"],ans:1}
+];
 
-function resizeCanvas() {
-  W = canvas.width = window.innerWidth;
-  H = canvas.height = window.innerHeight;
+const LABELS=['A','B','C','D'];
+let answers=new Array(ALL_Q.length).fill(-1);
+let cur=0;
+let submitted=false;
+
+function weeksFor(){
+  let ws=[];
+  ALL_Q.forEach(q=>{if(!ws.includes(q.w))ws.push(q.w);});
+  return ws.sort((a,b)=>a-b);
 }
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
 
-function randomParticle() {
-  return {
-    x: Math.random() * W,
-    y: Math.random() * H + H,
-    size: Math.random() * 4 + 2,
-    speedY: -(Math.random() * 0.6 + 0.2),
-    speedX: (Math.random() - 0.5) * 0.3,
-    opacity: Math.random() * 0.4 + 0.1,
-    color: Math.random() > 0.5 ? '#c0392b' : '#d4a847',
-    life: 1
-  };
+function renderWeekTabs(){
+  const el=document.getElementById('week-tabs');
+  const weeks=weeksFor();
+  el.innerHTML='<button class="wt active" onclick="jumpWeek(0)" id="wt-all">All</button>'+
+    weeks.map(w=>`<button class="wt" onclick="jumpWeek(${w})" id="wt-${w}">W${w}</button>`).join('');
 }
 
-for (let i = 0; i < 60; i++) {
-  let p = randomParticle();
-  p.y = Math.random() * H;
-  particles.push(p);
+function jumpWeek(w){
+  if(w===0){cur=0;}
+  else{cur=ALL_Q.findIndex(q=>q.w===w);if(cur<0)cur=0;}
+  renderQ();
+  document.querySelectorAll('.wt').forEach(b=>b.classList.remove('active'));
+  const tid=w===0?'wt-all':`wt-${w}`;
+  const tb=document.getElementById(tid);
+  if(tb)tb.classList.add('active');
 }
 
-function animParticles() {
-  ctx.clearRect(0, 0, W, H);
-  particles.forEach((p, i) => {
-    p.y += p.speedY;
-    p.x += p.speedX;
-    p.opacity -= 0.0008;
-    if (p.y < -20 || p.opacity <= 0) particles[i] = randomParticle();
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    ctx.fillStyle = p.color + Math.floor(p.opacity * 255).toString(16).padStart(2,'0');
-    ctx.fill();
-  });
-  requestAnimationFrame(animParticles);
+function renderQ(){
+  const q=ALL_Q[cur];
+  const answered=answers[cur]!==-1;
+  const container=document.getElementById('q-container');
+  container.innerHTML=`
+    <div class="q-card">
+      <div class="q-meta">Week ${q.w} · Question ${cur+1} of ${ALL_Q.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options" id="opts">
+        ${q.opts.map((o,i)=>`
+          <button class="opt${answers[cur]===i?' selected':''}"
+            id="opt-${i}" onclick="selectOpt(${i})" ${submitted&&answered?'disabled':''}>
+            <span class="badge">${LABELS[i]}</span>
+            <span>${o}</span>
+          </button>`).join('')}
+      </div>
+      <div class="answer-reveal ${submitted&&answered?'show':''}" id="reveal">
+        ${submitted&&answered?revealHTML(cur):''}
+      </div>
+    </div>
+    <div class="nav-row">
+      <button class="btn" onclick="nav(-1)" ${cur===0?'disabled':''}>← Prev</button>
+      <button class="btn" onclick="nav(1)" ${cur===ALL_Q.length-1?'disabled':''}>Next →</button>
+      ${!submitted?`<button class="btn primary" onclick="submitAll()" style="margin-left:auto">Submit & See Results</button>`:''}
+      <span class="q-num">${cur+1} / ${ALL_Q.length}</span>
+    </div>`;
+  updateStats();
+  highlightWeekTab();
 }
-animParticles();
 
-// ── Page transitions ────────────────────────────────────────
-function showPage(id) {
-  document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
-  document.getElementById(id).classList.remove('hidden');
+function revealHTML(i){
+  const q=ALL_Q[i];
+  const ua=answers[i];
+  const correct=ua===q.ans;
+  return `<strong>${correct?'Correct!':'Wrong.'}</strong> The correct answer is <strong>${LABELS[q.ans]}. ${q.opts[q.ans]}</strong>`;
 }
 
-function showMaybe() { showPage('page-maybe'); }
-function showScratch() {
-  showPage('page-scratch');
-  setTimeout(initScratchCards, 100);
+function selectOpt(i){
+  if(submitted)return;
+  answers[cur]=i;
+  renderQ();
 }
 
-// ── Scratch Cards ───────────────────────────────────────────
-let cardDone = [false, false, false];
+function nav(d){
+  cur=Math.max(0,Math.min(ALL_Q.length-1,cur+d));
+  renderQ();
+}
 
-function initScratchCards() {
-  for (let i = 0; i < 3; i++) {
-    const wrap = document.getElementById('card-' + i);
-    const c = document.getElementById('canvas-' + i);
-    const rect = wrap.getBoundingClientRect();
-    c.width = rect.width;
-    c.height = rect.height;
-    const cCtx = c.getContext('2d');
-
-    // Fill with scratch layer
-    cCtx.fillStyle = '#8B1a1a';
-    cCtx.fillRect(0, 0, c.width, c.height);
-
-    // Rose pattern
-    cCtx.font = '1.5rem serif';
-    for (let row = 0; row < c.height; row += 35) {
-      for (let col = 0; col < c.width; col += 35) {
-        cCtx.globalAlpha = 0.3;
-        cCtx.fillStyle = '#d4a847';
-        cCtx.fillText('🌹', col, row + 25);
-      }
-    }
-    cCtx.globalAlpha = 1;
-
-    // Border
-    cCtx.strokeStyle = 'rgba(212,168,71,0.5)';
-    cCtx.lineWidth = 2;
-    cCtx.beginPath();
-    cCtx.roundRect(1, 1, c.width-2, c.height-2, 17);
-    cCtx.stroke();
-
-    // Center text
-    cCtx.fillStyle = 'rgba(212,168,71,0.9)';
-    cCtx.font = 'italic 1rem "Cormorant Garamond", serif';
-    cCtx.textAlign = 'center';
-    cCtx.fillText('Scratch here ✨', c.width / 2, c.height / 2 - 15);
-    cCtx.font = '2rem serif';
-    cCtx.fillText('💋', c.width / 2, c.height / 2 + 20);
-
-    setupScratch(i, c, cCtx);
+function updateStats(){
+  const ans=answers.filter(a=>a!==-1).length;
+  let correct=0,wrong=0;
+  if(submitted){
+    answers.forEach((a,i)=>{if(a!==-1){if(a===ALL_Q[i].ans)correct++;else wrong++;}});
   }
+  document.getElementById('s-answered').textContent=ans;
+  document.getElementById('s-correct').textContent=submitted?correct:'—';
+  document.getElementById('s-wrong').textContent=submitted?wrong:'—';
+  document.getElementById('s-left').textContent=ALL_Q.length-ans;
+  const pct=Math.round(ans/ALL_Q.length*100);
+  document.getElementById('prog').style.width=pct+'%';
 }
 
-function setupScratch(idx, c, cCtx) {
-  let drawing = false;
-
-  function getPos(e) {
-    const rect = c.getBoundingClientRect();
-    if (e.touches) {
-      return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
-    }
-    return { x: e.clientX - rect.left, y: e.clientY - rect.top };
-  }
-
-  function scratch(e) {
-    if (!drawing || cardDone[idx]) return;
-    e.preventDefault();
-    const pos = getPos(e);
-    cCtx.globalCompositeOperation = 'destination-out';
-    cCtx.beginPath();
-    cCtx.arc(pos.x, pos.y, 22, 0, Math.PI * 2);
-    cCtx.fill();
-    checkReveal(idx, c, cCtx);
-  }
-
-  c.addEventListener('mousedown', e => { drawing = true; scratch(e); });
-  c.addEventListener('mousemove', scratch);
-  c.addEventListener('mouseup', () => drawing = false);
-  c.addEventListener('mouseleave', () => drawing = false);
-  c.addEventListener('touchstart', e => { drawing = true; scratch(e); }, { passive: false });
-  c.addEventListener('touchmove', scratch, { passive: false });
-  c.addEventListener('touchend', () => drawing = false);
+function highlightWeekTab(){
+  const w=ALL_Q[cur].w;
+  document.querySelectorAll('.wt').forEach(b=>b.classList.remove('active'));
+  const tb=document.getElementById(`wt-${w}`);
+  if(tb)tb.classList.add('active');
 }
 
-function checkReveal(idx, c, cCtx) {
-  if (cardDone[idx]) return;
-  const imgData = cCtx.getImageData(0, 0, c.width, c.height);
-  let transparent = 0;
-  for (let i = 3; i < imgData.data.length; i += 4) {
-    if (imgData.data[i] < 128) transparent++;
+function submitAll(){
+  const unanswered=answers.filter(a=>a===-1).length;
+  if(unanswered>0){
+    if(!confirm(`You have ${unanswered} unanswered questions. Submit anyway?`))return;
   }
-  const pct = transparent / (c.width * c.height);
-  if (pct > 0.45) {
-    cardDone[idx] = true;
-    cCtx.clearRect(0, 0, c.width, c.height); // fully reveal
-    document.getElementById('card-' + idx).classList.add('revealed');
-    document.getElementById('shimmer-' + idx).style.display = 'none';
-    document.getElementById('reveal-' + idx).style.display = 'block';
-
-    // disable other cards
-    for (let i = 0; i < 3; i++) {
-      if (i !== idx) {
-        document.getElementById('canvas-' + i).style.pointerEvents = 'none';
-        document.getElementById('card-' + i).style.opacity = '0.4';
-        document.getElementById('card-' + i).style.transform = 'scale(0.95)';
-      }
-    }
-
-    setTimeout(() => showFinal(idx), 900);
-  }
+  submitted=true;
+  showResults();
 }
 
-function showFinal(idx) {
-  const cards = [
-    { emoji: '🕯️', name: 'Slow & Romantic', desc: 'Candles, wine & long kisses — all night long, just you and me.' },
-    { emoji: '🔥', name: 'Wild & Passionate', desc: 'No rules tonight, just fire between us — let it all go.' },
-    { emoji: '🌙', name: 'Surprise Me', desc: "You're in charge tonight, my love. I'll follow your every lead." }
-  ];
-  const c = cards[idx];
-  document.getElementById('final-emoji').textContent = c.emoji;
-  document.getElementById('final-name').textContent = c.name;
-  document.getElementById('final-desc').textContent = c.desc;
-  showPage('page-final');
-  launchConfetti();
+function showResults(){
+  let correct=0;
+  answers.forEach((a,i)=>{if(a===ALL_Q[i].ans)correct++;});
+  const pct=Math.round(correct/ALL_Q.length*100);
+  document.getElementById('quiz-view').style.display='none';
+  document.getElementById('results').style.display='block';
+  document.getElementById('final-score').textContent=correct;
+  let msg='Keep studying — review the answers below!';
+  if(pct>=90)msg='Excellent! You are well prepared for the exam.';
+  else if(pct>=75)msg='Good performance! Go over the ones you missed.';
+  else if(pct>=60)msg='Passing range — review the incorrect answers carefully.';
+  document.getElementById('final-msg').textContent=msg+` (${pct}%)`;
 }
 
-// ── Confetti ────────────────────────────────────────────────
-function launchConfetti() {
-  const colors = ['#c0392b','#d4a847','#f9e0e0','#f06292','#e91e63'];
-  for (let i = 0; i < 80; i++) {
-    setTimeout(() => {
-      const el = document.createElement('div');
-      el.className = 'confetti-piece';
-      el.style.left = Math.random() * 100 + 'vw';
-      el.style.top = '-10px';
-      el.style.background = colors[Math.floor(Math.random() * colors.length)];
-      el.style.width = el.style.height = (Math.random() * 8 + 4) + 'px';
-      el.style.animationDuration = (Math.random() * 2 + 2) + 's';
-      el.style.animationDelay = '0s';
-      document.body.appendChild(el);
-      setTimeout(() => el.remove(), 5000);
-    }, i * 40);
-  }
+function showReview(){
+  const rl=document.getElementById('review-list');
+  if(rl.style.display==='block'){rl.style.display='none';return;}
+  rl.style.display='block';
+  rl.innerHTML=ALL_Q.map((q,i)=>{
+    const ua=answers[i];
+    const correct=ua===q.ans;
+    const label=correct?'rv-correct':'rv-wrong';
+    return `<div class="review-item ${label}">
+      <div class="rv-q">W${q.w} Q${i+1}: ${q.q}</div>
+      ${!correct&&ua!==-1?`<div class="rv-your">Your answer: ${LABELS[ua]}. ${q.opts[ua]}</div>`:''}
+      ${!correct?`<div class="rv-ans">Correct: ${LABELS[q.ans]}. ${q.opts[q.ans]}</div>`:''}
+    </div>`;
+  }).join('');
 }
+
+function restartQuiz(){
+  answers=new Array(ALL_Q.length).fill(-1);
+  cur=0;
+  submitted=false;
+  document.getElementById('results').style.display='none';
+  document.getElementById('quiz-view').style.display='block';
+  renderQ();
+  updateStats();
+}
+
+renderWeekTabs();
+renderQ();
 </script>
+
 
 </body>
 </html>
